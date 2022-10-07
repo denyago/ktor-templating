@@ -14,19 +14,27 @@ fun Application.indexPage() {
                     +"My Crazy Blog"
                 }
                 content {
-                    FakeBlog.posts.forEach { post ->
-                        articleTitle { +post.title.value }
-                        articleText { +post.content.value }
-                        articleAuthor { +post.author.nickname }
-                        post.comments.forEach { comm ->
-                            comment {
-                                commentText { +comm.content.value }
-                                commentAuthor { +comm.author.nickname }
+                    FakeBlog.posts.forEach { blogPost ->
+                        post {
+                            articleTitle { +blogPost.title.value }
+                            articleText { +blogPost.content.value }
+                            articleAuthor { +blogPost.author.nickname }
+                            blogPost.comments.forEach { comm ->
+                                comment {
+                                    commentText { +comm.content.value }
+                                    commentAuthor { +comm.author.nickname }
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
+        get("/posts") {}
+
+        get("/posts/{posstId}") {}
+
+        get("/authors/{nickname}") {}
     }
 }
