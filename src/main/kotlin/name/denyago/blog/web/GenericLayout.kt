@@ -1,23 +1,30 @@
 package name.denyago.blog.web
 
-import io.ktor.server.html.Placeholder
-import io.ktor.server.html.Template
-import io.ktor.server.html.TemplatePlaceholder
-import io.ktor.server.html.insert
-import kotlinx.html.FlowContent
-import kotlinx.html.HTML
-import kotlinx.html.body
-import kotlinx.html.h1
+import io.ktor.server.html.* // ktlint-disable no-wildcard-imports
+import kotlinx.html.* // ktlint-disable no-wildcard-imports
 
 class GenericLayout : Template<HTML> {
     val header = Placeholder<FlowContent>()
     val content = TemplatePlaceholder<ContentTemplate>()
+    private val css = listOf(
+        "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css",
+        "https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css"
+    )
     override fun HTML.apply() {
-        body {
-            h1 {
-                insert(header)
+        head {
+            meta(charset = "utf-8")
+            meta(name = "viewport", content = "width=device-width, initial-scale=1")
+            title("My Crazy Blog")
+            css.forEach {
+                link(rel = "stylesheet", href = it)
             }
-            insert(ContentTemplate(), content)
+        }
+        body {
+            section("section") {
+                div("container") {
+                    insert(ContentTemplate(), content)
+                }
+            }
         }
     }
 }

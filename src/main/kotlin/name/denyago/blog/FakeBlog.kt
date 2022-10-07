@@ -16,7 +16,7 @@ object FakeBlog {
                 AUTHORS.random(),
                 TITLES.random(),
                 CONTENTS.random(),
-                (0..nextInt(5)).map { Comment(AUTHORS.random(), COMMENTS.random()) }
+                (1..nextInt(3)).map { Comment(AUTHORS.random(), COMMENTS.random()) }
             )
         }
     }

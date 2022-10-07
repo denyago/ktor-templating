@@ -6,38 +6,27 @@ import io.ktor.server.html.Template
 import io.ktor.server.html.TemplatePlaceholder
 import io.ktor.server.html.each
 import io.ktor.server.html.insert
-import kotlinx.html.FlowContent
-import kotlinx.html.HTML
-import kotlinx.html.HtmlBlockTag
-import kotlinx.html.UL
-import kotlinx.html.article
-import kotlinx.html.body
-import kotlinx.html.div
-import kotlinx.html.h1
-import kotlinx.html.h2
-import kotlinx.html.head
-import kotlinx.html.p
-import kotlinx.html.title
-import kotlinx.html.ul
+import kotlinx.html.* // ktlint-disable no-wildcard-imports
 
 class ContentTemplate : Template<FlowContent> {
     val articleAuthor = Placeholder<FlowContent>()
     val articleTitle = Placeholder<FlowContent>()
     val articleText = Placeholder<FlowContent>()
-    val comment = PlaceholderList<UL, CommentTemplate>()
+    val comment = PlaceholderList<SECTION, CommentTemplate>()
 
     override fun FlowContent.apply() {
-        article {
-            h2 {
-                insert(articleTitle)
+        section("section") {
+            h1("title") { insert(articleTitle) }
+            h2("subtitle") {
+                text("by ")
+                i { insert(articleAuthor) }
             }
-            p {
-                insert(articleText)
+            section("section") {
+                div("content") {
+                    insert(articleText)
+                }
             }
-            p {
-                insert(articleAuthor)
-            }
-            ul {
+            section("section") {
                 each(comment) {
                     // Wow!!! It works!!!
                     // My regards to
