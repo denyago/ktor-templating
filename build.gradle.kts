@@ -28,6 +28,7 @@ dependencies {
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-host-common-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-sessions:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.github.serpro69:kotlin-faker:1.11.0")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")

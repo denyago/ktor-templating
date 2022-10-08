@@ -10,8 +10,10 @@ import kotlinx.html.* // ktlint-disable no-wildcard-imports
 
 class ContentTemplate : Template<FlowContent> {
     val post = PlaceholderList<SECTION, PostTemplate>()
+    val displayError = TemplatePlaceholder<ErrorTemplate>()
 
     override fun FlowContent.apply() {
+        insert(ErrorTemplate(), displayError)
         section("section") {
             each(post) {
                 // Wow!!! It works!!!

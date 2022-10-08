@@ -2,6 +2,8 @@ package name.denyago.blog
 
 import io.github.serpro69.kfaker.Faker
 import name.denyago.blog.data.* // ktlint-disable no-wildcard-imports
+import java.lang.IllegalArgumentException
+import java.util.*
 import kotlin.random.Random.Default.nextInt
 
 object FakeBlog {
@@ -12,7 +14,7 @@ object FakeBlog {
                 author(),
                 title(),
                 postContent(),
-                (1..nextInt(1, 4)).map { Comment(author(), commentContent()) }
+                (1..nextInt(1, 10)).map { Comment(author(), commentContent()) }
             )
         }
     }
@@ -32,4 +34,20 @@ object FakeBlog {
 
     private fun text(wordCount: Int) =
         (0..wordCount).joinToString(" ") { faker.lorem.words() }
+
+    private fun findPost(id: PostId?): Result<Post> =
+        posts
+            .find { it.id == id }
+            .let {
+                if (it != null) Result.success(it) else Result.failure(
+                    Errors.NotFoundError.from("Post", id?.value.toString())
+                )
+            }
+
+    fun findPost(id: String?): Result<Post> =
+        try {
+            findPost(PostId(UUID.fromString(id)))
+        } catch (e: IllegalArgumentException) {
+            Result.failure(e)
+        }
 }

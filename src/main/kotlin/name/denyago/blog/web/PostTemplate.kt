@@ -7,6 +7,7 @@ class PostTemplate : Template<SECTION> {
     val articleAuthor = Placeholder<FlowContent>()
     val articleTitle = Placeholder<FlowContent>()
     val articleText = Placeholder<FlowContent>()
+    val showMore = Placeholder<FlowContent>()
     val comment = PlaceholderList<SECTION, CommentTemplate>()
 
     override fun SECTION.apply() {
@@ -30,6 +31,7 @@ class PostTemplate : Template<SECTION> {
                         insert(it)
                     }
                 }
+                insert(showMore)
             }
         }
     }
