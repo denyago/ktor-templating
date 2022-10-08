@@ -1,13 +1,11 @@
 package name.denyago.blog.web
 
-import io.ktor.server.html.Placeholder
-import io.ktor.server.html.Template
-import io.ktor.server.html.insert
+import io.ktor.server.html.* // ktlint-disable no-wildcard-imports
 import kotlinx.html.* // ktlint-disable no-wildcard-imports
 
 class CommentTemplate : Template<SECTION> {
     val commentText = Placeholder<FlowContent>()
-    val commentAuthor = Placeholder<FlowContent>()
+    val commentAuthor = Placeholder<AuthorTemplate>()
 
     override fun SECTION.apply() {
         div("box") {
@@ -15,9 +13,8 @@ class CommentTemplate : Template<SECTION> {
                 insert(commentText)
             }
             div("content") {
-                p("is-pulled-right") {
-                    text("by ")
-                    i { insert(commentAuthor) }
+                insert(AuthorTemplate()) {
+                    insert(commentAuthor)
                 }
             }
         }

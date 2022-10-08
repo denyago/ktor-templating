@@ -5,10 +5,11 @@ import io.ktor.server.html.respondHtmlTemplate
 import io.ktor.server.routing.get // ktlint-disable no-wildcard-imports
 import io.ktor.server.routing.routing
 import name.denyago.blog.FakeBlog
+import name.denyago.blog.web.Helpers.urlFor
 
 fun Application.indexPage() {
     routing {
-        get("/") {
+        get(Helpers.Routes.START) {
             call.respondHtmlTemplate(GenericLayout()) {
                 header {
                     +"My Crazy Blog"
@@ -22,7 +23,10 @@ fun Application.indexPage() {
                             blogPost.comments.forEach { comm ->
                                 comment {
                                     commentText { +comm.content.value }
-                                    commentAuthor { +comm.author.nickname }
+                                    commentAuthor {
+                                        name { +comm.author.name }
+                                        link { urlFor(comm.author) }
+                                    }
                                 }
                             }
                         }
@@ -31,10 +35,10 @@ fun Application.indexPage() {
             }
         }
 
-        get("/posts") {}
+        get(Helpers.Routes.POSTS) {}
 
-        get("/posts/{posstId}") {}
+        get(Helpers.Routes.POST) {}
 
-        get("/authors/{nickname}") {}
+        get(Helpers.Routes.AUTHOR) {}
     }
 }

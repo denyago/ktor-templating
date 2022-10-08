@@ -1,3 +1,5 @@
 package name.denyago.blog.data
 
-class Author(val name: String, val nickname: String)
+data class Author(val name: String, val nickname: String) {
+    fun slug() = nickname.replace("\\s+".toRegex(), "-")
+}
